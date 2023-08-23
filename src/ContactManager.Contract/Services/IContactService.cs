@@ -6,7 +6,7 @@ public interface IContactService
 {
     Task<Guid> CreateAsync(ContactModel contact);
 
-    Task UpdateAsync(Guid id, UpdateContactModel contact);
+    Task UpdateAsync(Guid id, ContactModel contact);
 
     Task DeleteAsync(Guid id);
 

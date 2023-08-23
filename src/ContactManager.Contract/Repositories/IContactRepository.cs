@@ -6,7 +6,7 @@ public interface IContactRepository
 {
     Task CreateAsync(ContactModel contact);
 
-    Task<bool> UpdateAsync(Guid id, UpdateContactModel model);
+    Task<bool> UpdateAsync(Guid id, ContactModel model);
 
     Task<bool> DeleteAsync(Guid id);
 

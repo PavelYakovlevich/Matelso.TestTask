@@ -45,6 +45,17 @@ public class ContactsController : ControllerBase
         return NoContent();
     }
     
+        
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update(Guid id, APIActionContactModel apiModel)
+    {
+        var contact = _mapper.Map<ContactModel>(apiModel);
+
+        await _service.UpdateAsync(id, contact);
+        
+        return NoContent();
+    }
+    
     [HttpGet]
     public async IAsyncEnumerable<APIContactModel> Get([FromQuery] APIContactsFilters filters)
     {

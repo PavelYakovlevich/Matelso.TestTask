@@ -27,9 +27,18 @@ public class ContactRepository : IContactRepository
         await _context.SaveChangesAsync();
     }
 
-    public Task<bool> UpdateAsync(Guid id, UpdateContactModel model)
+    public async Task<bool> UpdateAsync(Guid id, ContactModel model)
     {
-        throw new NotImplementedException();
+        model.Id = id;
+        var entity = await _context.Contacts.FirstOrDefaultAsync(contact => contact.Id == id);
+        if (entity is null)
+        {
+            return false;
+        }
+        
+        _mapper.Map(model, entity);
+
+        return await _context.SaveChangesAsync() == 1;
     }
 
     public async Task<bool> DeleteAsync(Guid id)
