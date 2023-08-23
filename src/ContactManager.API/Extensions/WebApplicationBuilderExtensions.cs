@@ -29,6 +29,7 @@ public static class WebApplicationBuilderExtensions
         {
             config.CreateMap<APIContactModel, ContactModel>().ReverseMap();
             config.CreateMap<APIActionContactModel, UpdateContactModel>();
+            config.CreateMap<APIActionContactModel, ContactModel>();
             config.CreateMap<UpdateContactModel, ContactModel>();
             
             config.CreateMap<ContactModel, Contact>()
@@ -38,7 +39,7 @@ public static class WebApplicationBuilderExtensions
                 .ForMember(contactModel => contactModel.NotifyHasBirthdaySoon, opt =>
                 {
                     opt.MapFrom(src =>
-                        src.Birthday.HasValue && (DateTime.UtcNow - src.Birthday.Value).Days <=
+                        src.Birthday.HasValue && Math.Abs(DateTime.UtcNow.DayOfYear - src.Birthday.Value.DayOfYear) <=
                         notificationConfiguration.BirthdaySoonDays);
                 });
         });

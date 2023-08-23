@@ -56,7 +56,7 @@ public class ContactRepository : IContactRepository
     public async Task<ContactModel?> SelectByEmailAsync(string email)
     {
         var entity = await _context.Contacts.AsNoTracking()
-            .FirstOrDefaultAsync(contact => contact.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+            .FirstOrDefaultAsync(contact => contact.Email == email);
 
         return _mapper.Map<ContactModel?>(entity);
     }

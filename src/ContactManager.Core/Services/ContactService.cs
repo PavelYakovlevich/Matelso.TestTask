@@ -18,12 +18,12 @@ public class ContactService : IContactService
     
     public async Task<Guid> CreateAsync(ContactModel contact)
     {
+        contact = PrepareForSave(contact);
+        
         if (await _repository.SelectByEmailAsync(contact.Email) is not null)
         {
             throw new AlreadyExistsException($"Contact with email '{contact.Email}' exists");
         }
-
-        contact = PrepareForSave(contact);
 
         await _repository.CreateAsync(contact);
         
@@ -70,6 +70,7 @@ public class ContactService : IContactService
 
     private static ContactModel PrepareForSave(ContactModel contact)
     {
+        contact.Email = contact.Email.Trim().ToLower();
         contact.Id = Guid.NewGuid();
         contact.CreationTimestamp = DateTime.UtcNow;
         contact.LastChangeTimestamp = contact.CreationTimestamp;
