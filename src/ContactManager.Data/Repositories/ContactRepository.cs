@@ -64,6 +64,7 @@ public class ContactRepository : IContactRepository
     public IAsyncEnumerable<ContactModel> SelectAsync(int skip, int count)
     {
         return _context.Contacts.AsNoTracking()
+            .OrderByDescending(contact => contact.CreationTimestamp)
             .Skip(skip)
             .Take(count)
             .Select(contact => _mapper.Map<ContactModel>(contact))
