@@ -1,15 +1,49 @@
 ﻿using System.Reflection;
 using ContactManager.API.Configurations;
 using ContactManager.Contract.Repositories;
+using ContactManager.Contract.Services;
+using ContactManager.Core.Services;
 using ContactManager.Data.Context;
+using ContactManager.Data.Entities;
 using ContactManager.Data.Repositories;
+using ContactManager.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Models.ContactManager;
 using Serilog;
 
 namespace ContactManager.API.Extensions;
 
 public static class WebApplicationBuilderExtensions
 {
+    public static void SetupServices(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddTransient<IContactService, ContactService>();
+    }
+    
+    public static void SetupMapper(this WebApplicationBuilder builder)
+    {
+        var notificationConfiguration = new ContactNotificationsConfiguration();
+        builder.Configuration.GetSection(nameof(ContactNotificationsConfiguration)).Bind(notificationConfiguration);
+
+        builder.Services.AddAutoMapper(config =>
+        {
+            config.CreateMap<APIContactModel, ContactModel>().ReverseMap();
+            config.CreateMap<APIActionContactModel, UpdateContactModel>();
+            config.CreateMap<UpdateContactModel, ContactModel>();
+            
+            config.CreateMap<ContactModel, Contact>()
+                .ReverseMap();
+
+            config.CreateMap<Contact, ContactModel>()
+                .ForMember(contactModel => contactModel.NotifyHasBirthdaySoon, opt =>
+                {
+                    opt.MapFrom(src =>
+                        src.Birthday.HasValue && (DateTime.UtcNow - src.Birthday.Value).Days <=
+                        notificationConfiguration.BirthdaySoonDays);
+                });
+        });
+    }
+
     public static void SetupDb(this WebApplicationBuilder builder)
     {
         var connectionString = builder.Configuration.GetConnectionString("PostgreSQL")!;

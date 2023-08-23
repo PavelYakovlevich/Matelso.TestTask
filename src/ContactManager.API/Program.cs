@@ -4,12 +4,16 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.UseSerilog();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.SetupSerilog();
+builder.SetupServices();
 builder.SetupDb();
+builder.SetupMapper();
 
 var app = builder.Build();
 

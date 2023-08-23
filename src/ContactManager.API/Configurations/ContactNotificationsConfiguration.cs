@@ -2,5 +2,5 @@
 
 public class ContactNotificationsConfiguration
 {
-    
+    public int BirthdaySoonDays { get; set; }
 }

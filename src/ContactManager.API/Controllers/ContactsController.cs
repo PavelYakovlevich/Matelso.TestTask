@@ -6,4 +6,5 @@ namespace ContactManager.API.Controllers;
 [Route("[controller]")]
 public class ContactsController : ControllerBase
 {
+    
 }
