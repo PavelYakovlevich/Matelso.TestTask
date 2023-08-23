@@ -1,0 +1,21 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D80E91F6-FA0A-4486-A7C7-CBE80485786B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactManager.API", "src\ContactManager.API\ContactManager.API.csproj", "{9DE30161-8AE2-4300-B8D4-FAD7FDD9BA67}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9DE30161-8AE2-4300-B8D4-FAD7FDD9BA67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DE30161-8AE2-4300-B8D4-FAD7FDD9BA67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DE30161-8AE2-4300-B8D4-FAD7FDD9BA67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DE30161-8AE2-4300-B8D4-FAD7FDD9BA67}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9DE30161-8AE2-4300-B8D4-FAD7FDD9BA67} = {D80E91F6-FA0A-4486-A7C7-CBE80485786B}
+	EndGlobalSection
+EndGlobal
