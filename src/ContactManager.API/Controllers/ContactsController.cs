@@ -29,6 +29,14 @@ public class ContactsController : ControllerBase
         return CreatedAtAction(nameof(Create), id);
     }
     
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var contact = await _service.ReadByIdAsync(id);
+
+        return Ok(contact);
+    }
+    
     [HttpGet]
     public async IAsyncEnumerable<APIContactModel> Get([FromQuery] APIContactsFilters filters)
     {
