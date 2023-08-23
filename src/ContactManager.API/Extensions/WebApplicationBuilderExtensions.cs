@@ -31,9 +31,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddAutoMapper(config =>
         {
             config.CreateMap<APIContactModel, ContactModel>().ReverseMap();
-            config.CreateMap<APIActionContactModel, UpdateContactModel>();
             config.CreateMap<APIActionContactModel, ContactModel>();
-            config.CreateMap<UpdateContactModel, ContactModel>();
             
             config.CreateMap<ContactModel, Contact>()
                 .ReverseMap();
