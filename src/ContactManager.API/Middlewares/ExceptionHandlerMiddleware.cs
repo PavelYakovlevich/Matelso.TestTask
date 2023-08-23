@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Exceptions;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Serilog;
 
@@ -18,6 +19,22 @@ internal class ExceptionHandlerMiddleware
         try
         {
             await _next.Invoke(httpContext);
+        }
+        catch (AlreadyExistsException exception)
+        {
+            await HandleException(httpContext,
+                exception,
+                StatusCodes.Status400BadRequest,
+                "Bad request",
+                () => Log.Information("Execution failed with message: {Message}", GetExceptionDescriptionJson(exception)));
+        }
+        catch (NotFoundException exception)
+        {
+            await HandleException(httpContext,
+                exception,
+                StatusCodes.Status404NotFound,
+                "Not found",
+                () => Log.Information("Execution failed with message: {Message}", GetExceptionDescriptionJson(exception)));
         }
         catch (Exception exception)
         {
