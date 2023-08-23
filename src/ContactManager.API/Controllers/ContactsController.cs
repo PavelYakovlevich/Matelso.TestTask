@@ -37,6 +37,14 @@ public class ContactsController : ControllerBase
         return Ok(contact);
     }
     
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        await _service.DeleteAsync(id);
+        
+        return NoContent();
+    }
+    
     [HttpGet]
     public async IAsyncEnumerable<APIContactModel> Get([FromQuery] APIContactsFilters filters)
     {
