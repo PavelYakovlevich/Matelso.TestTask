@@ -14,6 +14,7 @@ builder.SetupSerilog();
 builder.SetupServices();
 builder.SetupDb();
 builder.SetupMapper();
+builder.SetupValidation();
 
 var app = builder.Build();
 

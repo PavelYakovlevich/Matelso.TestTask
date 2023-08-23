@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using ContactManager.API.Configurations;
+using ContactManager.API.Validators;
 using ContactManager.Contract.Repositories;
 using ContactManager.Contract.Services;
 using ContactManager.Core.Services;
@@ -7,6 +8,8 @@ using ContactManager.Data.Context;
 using ContactManager.Data.Entities;
 using ContactManager.Data.Repositories;
 using ContactManager.Domain.Models;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Models.ContactManager;
 using Serilog;
@@ -59,6 +62,13 @@ public static class WebApplicationBuilderExtensions
                 optionsBuilder.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), null);
             });
         });
+    }
+    
+    public static void SetupValidation(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddValidatorsFromAssemblyContaining(typeof(APIActionContactModelValidator));
+
+        builder.Services.AddFluentValidationAutoValidation();
     }
     
     public static void SetupSerilog(this WebApplicationBuilder builder)

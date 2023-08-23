@@ -10,6 +10,9 @@
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="12.0.1" />
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+        <PackageReference Include="FluentValidation" Version="11.7.1" />
+        <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.7.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.21">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -36,6 +39,8 @@
       <ProjectReference Include="..\ContactManager.Data\ContactManager.Data.csproj" />
       <ProjectReference Include="..\Models\Models.csproj" />
     </ItemGroup>
+
+
 
 
 
