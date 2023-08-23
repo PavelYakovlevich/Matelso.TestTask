@@ -18,10 +18,10 @@ public class Contact
     [MaxLength(50)]
     public string LastName { get; set; }
 
-    [MaxLength(50)]
+    [MaxLength(200)]
     public string? DisplayName { get; set; }
 
-    public DateTime Birthday { get; set; }
+    public DateTime? Birthday { get; set; }
 
     public DateTime CreationTimestamp { get; set; }
     

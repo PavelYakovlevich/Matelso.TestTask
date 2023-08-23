@@ -9,6 +9,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ContactManager.Contract\ContactManager.Contract.csproj" />
+      <ProjectReference Include="..\Exceptions\Exceptions.csproj" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <PackageReference Include="Serilog" Version="3.0.2-dev-02044" />
     </ItemGroup>
 
 </Project>

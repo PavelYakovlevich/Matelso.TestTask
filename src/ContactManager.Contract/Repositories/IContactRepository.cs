@@ -4,13 +4,15 @@ namespace ContactManager.Contract.Repositories;
 
 public interface IContactRepository
 {
-    Task<Guid> CreateAsync(ContactModel contact);
+    Task CreateAsync(ContactModel contact);
 
-    Task UpdateAsync(Guid id);
+    Task<bool> UpdateAsync(Guid id, UpdateContactModel model);
 
-    Task DeleteAsync(Guid id);
+    Task<bool> DeleteAsync(Guid id);
 
-    Task<ContactModel> SelectByIdAsync(Guid id);
+    Task<ContactModel?> SelectByIdAsync(Guid id);
+    
+    Task<ContactModel?> SelectByEmailAsync(string email);
 
     IAsyncEnumerable<ContactModel> SelectAsync(int skip, int count);
 }

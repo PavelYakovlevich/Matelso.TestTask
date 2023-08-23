@@ -5,22 +5,27 @@ namespace ContactManager.Data.Repositories;
 
 public class ContactRepository : IContactRepository
 {
-    public Task<Guid> CreateAsync(ContactModel contact)
+    public Task CreateAsync(ContactModel contact)
     {
         throw new NotImplementedException();
     }
 
-    public Task UpdateAsync(Guid id)
+    public Task<bool> UpdateAsync(Guid id, UpdateContactModel model)
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteAsync(Guid id)
+    public Task<bool> DeleteAsync(Guid id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ContactModel> SelectByIdAsync(Guid id)
+    public Task<ContactModel?> SelectByIdAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ContactModel?> SelectByEmailAsync(string email)
     {
         throw new NotImplementedException();
     }
