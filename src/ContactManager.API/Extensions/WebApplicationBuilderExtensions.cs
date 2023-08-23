@@ -14,7 +14,7 @@ public static class WebApplicationBuilderExtensions
     {
         var connectionString = builder.Configuration.GetConnectionString("PostgreSQL")!;
 
-        builder.ConfigureRepositories();
+        builder.SetupRepositories();
 
         builder.Services.AddDbContext<ContactsDbContext>(options =>
         {
@@ -48,7 +48,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddSingleton(serilogConfiguration);
     }
     
-    private static void ConfigureRepositories(this WebApplicationBuilder builder)
+    private static void SetupRepositories(this WebApplicationBuilder builder)
     {
         builder.Services.AddTransient<IContactRepository, ContactRepository>();
     }

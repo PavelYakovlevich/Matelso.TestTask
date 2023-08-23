@@ -1,13 +1,30 @@
-﻿using ContactManager.Contract.Repositories;
+﻿using AutoMapper;
+using ContactManager.Contract.Repositories;
+using ContactManager.Data.Context;
+using ContactManager.Data.Entities;
 using ContactManager.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ContactManager.Data.Repositories;
 
 public class ContactRepository : IContactRepository
 {
-    public Task CreateAsync(ContactModel contact)
+    private readonly ContactsDbContext _context;
+    private readonly IMapper _mapper;
+
+    public ContactRepository(ContactsDbContext context, IMapper mapper)
     {
-        throw new NotImplementedException();
+        _context = context;
+        _mapper = mapper;
+    }
+    
+    public async Task CreateAsync(ContactModel contact)
+    {
+        var entity = _mapper.Map<Contact>(contact);
+
+        await _context.Contacts.AddAsync(entity);
+        
+        await _context.SaveChangesAsync();
     }
 
     public Task<bool> UpdateAsync(Guid id, UpdateContactModel model)
@@ -15,23 +32,41 @@ public class ContactRepository : IContactRepository
         throw new NotImplementedException();
     }
 
-    public Task<bool> DeleteAsync(Guid id)
+    public async Task<bool> DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var entity = await _context.Contacts.FirstOrDefaultAsync(contact => contact.Id == id);
+        if (entity is null)
+        {
+            return false;
+        }
+        
+        _context.Contacts.Remove(entity);
+
+        return await _context.SaveChangesAsync() != 0;
     }
 
-    public Task<ContactModel?> SelectByIdAsync(Guid id)
+    public async Task<ContactModel?> SelectByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var entity = await _context.Contacts.AsNoTracking()
+            .FirstOrDefaultAsync(contact => contact.Id == id);
+
+        return _mapper.Map<ContactModel?>(entity);
     }
 
-    public Task<ContactModel?> SelectByEmailAsync(string email)
+    public async Task<ContactModel?> SelectByEmailAsync(string email)
     {
-        throw new NotImplementedException();
+        var entity = await _context.Contacts.AsNoTracking()
+            .FirstOrDefaultAsync(contact => contact.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+
+        return _mapper.Map<ContactModel?>(entity);
     }
 
     public IAsyncEnumerable<ContactModel> SelectAsync(int skip, int count)
     {
-        throw new NotImplementedException();
+        return _context.Contacts.AsNoTracking()
+            .Skip(skip)
+            .Take(count)
+            .Select(contact => _mapper.Map<ContactModel>(contact))
+            .AsAsyncEnumerable();
     }
 }
